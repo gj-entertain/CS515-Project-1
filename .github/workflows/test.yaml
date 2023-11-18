@@ -1,0 +1,22 @@
+name: Run Tests
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - name: Install dependencies
+      run: |
+        # Install any dependencies here, if you have any
+        # For example, if you need to install a library, you can use pip:
+        # pip install <library-name>
+    - name: Run Tests
+      run: python test.py
+      # This will run your test.py script. Make sure test.py exits with a non-zero status code on failure.
