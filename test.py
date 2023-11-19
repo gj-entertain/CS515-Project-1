@@ -4,11 +4,11 @@ import os
 import sys
 import subprocess
 
-def run_test(prog, input_file, output_file, mode, column_indices):
+def run_test(prog, input_file, output_file, mode, args):
     with open(input_file, 'r') as f:
         input_data = f.read()
 
-    cmd = [f'./prog/{prog}.py'] + column_indices
+    cmd = [f'./prog/{prog}.py'] + args
     try:
         if mode == 'stdin':
             result = subprocess.run(cmd, input=input_data, capture_output=True, text=True, check=True)
@@ -48,13 +48,13 @@ def main():
             args_file = os.path.join(test_dir, f'{prog}.{name}.args')
             if os.path.exists(args_file):
                 with open(args_file, 'r') as af:
-                    column_indices = af.read().split()
+                    args = af.read().split()
             else:
-                column_indices = []  # Default to empty if no args file
+                args = []  # Default to empty if no args file
             
             # Run test for standard input
             total_tests += 1
-            passed, reason, data, expected_data = run_test(prog, input_file, output_file_stdin, 'stdin', column_indices)
+            passed, reason, data, expected_data = run_test(prog, input_file, output_file_stdin, 'stdin', args)
             if passed:
                 passed_tests += 1
             else:
@@ -62,7 +62,7 @@ def main():
             
             # Run test for command-line argument
             total_tests += 1
-            passed, reason, data, expected_data = run_test(prog, input_file, output_file_arg, 'arg', column_indices)
+            passed, reason, data, expected_data = run_test(prog, input_file, output_file_arg, 'arg', args)
             if passed:
                 passed_tests += 1
             else:
