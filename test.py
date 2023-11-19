@@ -14,7 +14,6 @@ def run_test(prog, input_file, output_file, mode, column_indices):
             result = subprocess.run(cmd, input=input_data, capture_output=True, text=True, check=True)
         elif mode == 'arg':
             cmd.insert(1, input_file)
-            print(cmd)
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
         output_data = result.stdout
     except subprocess.CalledProcessError as e:
